@@ -5,22 +5,16 @@ import PropTypes from 'prop-types';
 import { Icon } from 'react-native-elements';
 
 class CustomItem extends Component {
-
-  refreshFlatList = (activeKey) => {
-    this.setState((prevState) => {
-        return {
-            deletedRowKey: activeKey
-        };
-    });
-    this.refs.flatList.scrollToEnd();
-}
+  constructor(props){
+    super()
+  }
 
   handlePress(){
     this.setState(() =>( this.props.xxx.isShowing =! this.props.xxx.isShowing))
   }
-  onClick()
-  {
-    alert('Hi')
+
+  onPressOpenModal(){
+    this.props.onPressOpenModal(this.props.xxx.key)
   }
 
   render() {
@@ -32,7 +26,6 @@ class CustomItem extends Component {
               <Text style={{color:'grey',fontSize:12,}}>{this. props.xxx.so_lich}</Text>
         </View>
         {/* view1 */}         
-        {/* <View style={this.props.xxx.isShowing? {width:'100%', height:30}: {width:0, height:0}}> */}
         <View style={styles.view2}>
               <View >
                 <Image style={{width:60,height:60,borderRadius:5}} source={require('./Data/avatar.jpg')}></Image>
@@ -67,7 +60,7 @@ class CustomItem extends Component {
         <TouchableOpacity onPress={()=>{this.handlePress()}}>
 
           <View style={{backgroundColor:'red',width:15,height:15}}>
-                <Text style={{color:'white', fontSize:10,paddingLeft:5}}>{this.props.xxx.countnote1}{this.props.xxx.countnote2}</Text>
+                <Text style={{color:'white', fontSize:10,paddingLeft:5}}>{this.props.xxx.countnote}</Text>
           </View>
           <View style={this.props.xxx.isShowing? {width:'100%', height:30}: {width:0, height:0}}>
                                     <Text>{this.props.xxx.note}</Text>
@@ -86,7 +79,7 @@ class CustomItem extends Component {
           <View style={{flexDirection:'row',width:100,marginTop:10}}>
             
               <Icon name='bookmark' type='font-awesome' size={14}   />
-              <Text style={{fontSize:14,marginLeft:7,marginBottom:5}} onPress={()=>{this.props.onPressAdd1()}}>Ghi chú</Text>
+              <Text style={{fontSize:14,marginLeft:7,marginBottom:5}} onPress={()=>{this.props.onPressOpenModal()}}>Ghi chú</Text>
               
           </View>
           <View style={{flexDirection:'row',width:100}}>

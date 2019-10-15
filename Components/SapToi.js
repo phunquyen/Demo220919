@@ -2,82 +2,46 @@ import React, { Component } from 'react'
 import CustomItem from './CustomItem'
 import {FlatList,View,Modal,Text,TouchableHighlight} from 'react-native'
 import AddModal from './Data/AddModal'
-import List from './Data/List'
+import DATA from './Data/List'
 export default class SapToi extends Component {
     constructor(props) {
         super(props);
         this.state = {
           countnote1:0,
           key:0,
-          arrInfo:[]
+          data:[]
         };
-        this.onPressAdd1 = this.onPressAdd1.bind(this);
-        this.onPressAdd2 = this.onPressAdd2.bind(this);
-        this.Click = this.Click.bind(this)        
+        this.onPressOpenModal = this.onPressOpenModal.bind(this);
+        this.savenote = this.savenote.bind(this)
       }
-      Click(item){
-        let arrInfo = this.state.arrInfo
-        
-        for (let index = 0; index < arrInfo.length; index++) {
-            const element = arrInfo[index];
-            if(item.id === element.id ){
-                element.key = !element.key;
-                arrInfo [index] = element
-                break;
-            }
-        }
-        
-        let temp = []
-        for (let item of arrInfo) {
-
-            temp.push(item)
-            
-        }
-        console.log(temp)
-        this.setState({ arrInfo:temp});
-        }
-
-        componentDidMount(){
-            this.setState({
-                arrInfo: List
-            })
-        }
     
     showName(name){
         alert(name);
     }
-    showStatus(status){
-        alert(status);
+    onPressOpenModal(key) {
+        this.refs.addModal.showAddModal(key);
     }
-    refreshFlatList = (activeKey) => {
-        this.setState(() => {
-            return {
-                deletedRowKey: activeKey
-            };
-        });
-        this.refs.flatList.scrollToEnd();
-    }
-    onPressAdd1() {
-        this.refs.addModal.showAddModal();
-        this.setState({countnote1: this.state.countnote1 + 1})
-
-    }
-    onPressAdd2() {
-        // this.refs.addModal.showAddModal();
-        this.setState({countnote2: this.state.countnote2 + 1})
-
-    }
-    clickOpen(){
+    componentDidMount(){
         this.setState({
-            showAddModal:true,
+            data: DATA
         })
-        console.log('hello')
     }
-
-    clickClose(){
-        this.setState({
-            showAddModal:false
-        })
+     // luu so luong note
+     savenote(key){
+        let data = this.state.data
+        for(let i =  0 ; i< data.length;i++)
+        {
+            if(key === data[i].key){
+                data[i].countnote = data[i].countnote  + 1;
+                 break;
+            }
+        }
+        let arr_tmp = [];
+        for(let i =  0 ; i< data.length;i++)
+        {
+            arr_tmp.push(data[i])
+        }
+        this.setState({data: arr_tmp})
     }
     
     render() 
@@ -85,14 +49,14 @@ export default class SapToi extends Component {
         return (
             <View style={{flex:1}}>
             <FlatList 
-            data={List}
-            renderItem={({item}) =><CustomItem xxx={item} showName={this.showName.bind(this)} onPressAdd1={this.onPressAdd1.bind(this)}
-            onPressAdd2={this.onPressAdd2.bind(this)}/>}
+            data={this.state.data}
+            renderItem={({item}) =><CustomItem xxx={item} showName={this.showName.bind(this)} onPressOpenModal={this.onPressOpenModal.bind(this)}
+            />}
 
             />
                 {/* FlatList */}
 
-            <AddModal ref={'addModal'} parentFlatList={this} >
+            <AddModal ref={'addModal'} savenote = {this.savenote} >
             </AddModal>
             {/*addModel*/}
             </View>

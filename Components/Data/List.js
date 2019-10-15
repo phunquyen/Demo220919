@@ -1,4 +1,4 @@
-const List= [
+const DATA= [
     {
         icon:'check',
         kieu_kham :  'Đến phòng khám',  
@@ -11,8 +11,8 @@ const List= [
         dia_chi: '40 Tràng Thi - Hà Nội', 
         loai_benh: 'Đau vai gáy', 
         note: '...',
-        key:1,
-        countnote1:1
+        key:111,
+        countnote:0
     },
     {
         icon:'check',
@@ -27,9 +27,9 @@ const List= [
         loai_benh: 'Con sot cao', 
         note: '...',
         key:2,
-        countnote2:0
+        countnote:0
 
     },
     
 ]
-export default List;
+export default DATA;
